@@ -16,7 +16,7 @@ Este proyecto es un backend seguro y modular para una aplicación de tareas (ToD
 
 ```bash
 git clone https://github.com/CarlosMS01/backtodolist.git
-cd todolist-backend
+cd backtodolist
 
 python -m venv venv
 source venv/bin/activate  # Linux/macOS
@@ -35,5 +35,5 @@ Este backend está organizado como paquete Python para blindar imports y facilit
 ## Ejecución
 
 ```bash
-python -m backend.app
+python -m backtodolist.app
 ```
