@@ -27,6 +27,7 @@ pip install -r requirements.txt
 
 ## 📁 Estructura de carpetas
 
+```bash
 backtodolist/
 ├── routes/
 │   ├── __init__.py
@@ -43,6 +44,7 @@ backtodolist/
 ├── models.py
 ├── requirements.txt
 ├── README.md
+```
 
 ## 📝 Estructura del proyecto
 
