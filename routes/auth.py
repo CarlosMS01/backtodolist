@@ -49,3 +49,25 @@ def logout():
     return response
 
 # ---------------------------------------------------------------------------------------------
+
+@auth_bp.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    username = data.get('username', '').strip()
+    email = data.get('email', '').strip()
+    password = data.get('password', '').strip()
+
+    if not (is_valid_username(username) and is_valid_email(email) and is_valid_password(password)):
+        return jsonify({'error': 'Datos inválidos. Verifica nombre, email y contraseña'}), 400
+
+    if User.query.filter_by(email=email).first():
+        return jsonify({'error': 'Email ya registrado'}), 400
+
+    hashed_pw = bcrypt.generate_password_hash(password).decode('utf-8')
+    new_user = User(username=username, email=email, password_hash=hashed_pw)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({'message': 'Usuario registrado correctamente'})
+
+# ---------------------------------------------------------------------------------------------
