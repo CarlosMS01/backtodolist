@@ -38,7 +38,7 @@ pip install -r requirements.txt
 ## 🚀 Ejecución
 
 ```bash
-python -m backtodolist.app
+python backtodolist/app.py
 ```
 
 ## 📁 Estructura de carpetas
@@ -58,7 +58,6 @@ backtodolist/
 ├── app.py
 ├── database.py
 ├── models.py
-├── Procfile
 ├── README.md
 ├── requirements.txt
 ```
@@ -108,3 +107,62 @@ Este proyecto implementa validaciones robustas y pruebas automatizadas para prev
 
 - Se validan campos como `email`, `password` y `username` antes de procesarlos.
 - Se utiliza SQLAlchemy para evitar interpolación directa de datos en consultas.
+
+---
+
+## 🚀 Despliegue en Render para este proyecto
+
+Esta sección describe cómo desplegar correctamente el backend en Render, asegurando compatibilidad, modularidad y seguridad.
+
+### 📦 Requisitos previos del proyecto
+- Repositorio en GitHub con los siguientes archivos en la raíz:
+  - `app.py` con instancia `app`
+  - `requirements.txt` con dependencias
+  - `.gitignore` excluyendo `.env`
+
+## 🧭 Pasos para desplegar este proyecto
+
+1. Crear el servicio en Render
+  - Accede a `Render Dashboard`
+  - Haz clic en **"New Web Service"**
+  - Selecciona **"Deploy from a Git repository"**
+  - Conecta tu cuenta de GitHub y elige el repositorio
+2. Configurar el entorno
+  - **Name:** `backtodolist`
+  - **Environment:** `Python 3`
+  - **Branch:** `main`
+  - **Root Directory:** (déjar vacío si los archivos están en la raíz)
+  - Build Command:
+  ```bash
+  pip install -r requirements.txt
+  ```
+  - Start Command:
+  ```bash
+  gunicorn app:app
+  ```
+3. Agregar variables de entorno
+En la sección Environment Variables, agrega:
+
+| Variable           | Valor (ejemplo)                          |
+|--------------------|------------------------------------------|
+| DATABASE_URL       | postgres://usuario:clave@host/db         |
+| JWT_SECRET_KEY     | clave_segura_123                         |
+
+Esta tabla es perfecta para la sección de configuración de variables de entorno en Render.
+4. Desplegar y validar
+  - Render instalará dependencias y ejecutará el backend con Gunicorn
+  - Accede a la URL pública que Render genera
+  - El endpoint / debe responder con:
+  ```bash
+  To-Do List API funcionando. Versión actual: Octubre 2025
+  ```
+
+---
+
+## 🛠️ Troubleshooting: Despliegue en Render
+
+Para que el proyecto funcione correctamente en Render los `imports` deben verse asi:
+```python
+from database import init_app
+```
+Esto permite que Python reconozca los módulos correctamente desde la raíz del proyecto.

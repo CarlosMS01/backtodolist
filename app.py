@@ -1,6 +1,6 @@
 from flask_cors import CORS
-from backtodolist.database import init_app, db
-from backtodolist.routes import register_blueprints
+from database import init_app, db
+from routes import register_blueprints
 
 def create_app():
     app = init_app()
@@ -12,7 +12,7 @@ app = create_app()
 
 @app.route("/")
 def home():
-    return "To-Do Pro API funcionando. Versión actual: Octubre 2025"
+    return "To-Do List API funcionando. Versión actual: Octubre 2025"
 
 if __name__ == "__main__":
     app.run(debug=False)

@@ -1,9 +1,9 @@
 from flask import Blueprint, request, jsonify, make_response
 from flask_bcrypt import Bcrypt
-from backtodolist.database import db
-from backtodolist.models import User
-from backtodolist.utils.auth_utils import generate_token, validate_credentials
-from backtodolist.utils.validators import is_valid_email, is_valid_password, is_valid_username
+from database import db
+from models import User
+from utils.auth_utils import generate_token, validate_credentials
+from utils.validators import is_valid_email, is_valid_password, is_valid_username
 
 auth_bp = Blueprint('auth', __name__)
 bcrypt = Bcrypt()
