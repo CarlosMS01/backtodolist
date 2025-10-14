@@ -85,6 +85,7 @@ Define las rutas `/login` y `/logout` usando `Blueprint`. Implementa autenticaci
 - `login()`: valida credenciales y genera token JWT.
 - `logout()`: elimina el token del navegador.
 - `register()`: registra un nuevo usuario con los campos `email`, `password` y `username`.
+- `me()`: obtiene el usuario correspondiente.
 - Usa `bcrypt` para verificar contraseñas encriptadas.
 - Integra validadores y utilidades desde `utils`.
 
@@ -100,6 +101,7 @@ Encapsula la lógica de autenticación:
 
 - `generate_token(user_id)`: crea un token JWT con expiración configurable.
 - `validate_credentials(email, password)`: consulta el usuario en la base de datos y verifica la contraseña con `bcrypt`.
+- `get_current_user()`: extraer el token JWT desde las cookies, decodificarlo, y obtener el `id` delusuario correspondiente.
 
 ## 🔐 Seguridad y Validación
 
