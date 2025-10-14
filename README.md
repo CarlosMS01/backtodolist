@@ -15,6 +15,7 @@ Este proyecto es un backend seguro y modular para una aplicación de tareas (ToD
 - **python-dotenv** – Manejo de variables de entorno
 - **PyJWT** – Autenticación con tokens JWT
 - **psycopg2-binary** – Conexión con PostgreSQL
+- **gunicorn 21.2.0** – Servidor WSGI para producción en Render
 
 ### 🛠️ Herramientas de desarrollo
 - **Git** – Control de versiones
@@ -57,8 +58,9 @@ backtodolist/
 ├── app.py
 ├── database.py
 ├── models.py
-├── requirements.txt
+├── Procfile
 ├── README.md
+├── requirements.txt
 ```
 
 ## 📝 Estructura del proyecto
