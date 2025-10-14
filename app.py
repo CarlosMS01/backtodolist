@@ -12,7 +12,7 @@ app = create_app()
 
 @app.route("/")
 def home():
-    return "To-Do Pro API funcionando. Versión actual: Octubre 2025"
+    return "To-Do List API funcionando. Versión actual: Octubre 2025"
 
 if __name__ == "__main__":
     app.run(debug=False)
