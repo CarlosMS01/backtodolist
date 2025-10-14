@@ -142,10 +142,12 @@ Esta sección describe cómo desplegar correctamente el backend en Render, asegu
   ```
 3. Agregar variables de entorno
 En la sección Environment Variables, agrega:
+
 | Variable           | Valor (ejemplo)                          |
 |--------------------|------------------------------------------|
 | DATABASE_URL       | postgres://usuario:clave@host/db         |
 | JWT_SECRET_KEY     | clave_segura_123                         |
+
 Esta tabla es perfecta para la sección de configuración de variables de entorno en Render.
 4. Desplegar y validar
   - Render instalará dependencias y ejecutará el backend con Gunicorn
