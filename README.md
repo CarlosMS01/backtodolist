@@ -4,13 +4,22 @@ Este proyecto es un backend seguro y modular para una aplicación de tareas (ToD
 
 ## 💻 Tecnologías utilizadas
 
-- **Flask 3.1.2** – Framework principal
-- **Flask-Bcrypt 1.0.1** – Encriptación de contraseñas
-- **Flask-SQLAlchemy 3.1.1** – ORM para base de datos
-- **Flask-Cors 6.0.1** – Permitir peticiones desde frontend
-- **python-dotenv 1.1.1** – Manejo de variables de entorno
-- **PyJWT 2.10.1** – Autenticación con tokens JWT
-- **psycopg2-binary 2.9.11** – Conexión con PostgreSQL
+### 🧱 Framework y lenguaje
+- **Python 3.13.1** – Lenguaje principal
+- **Flask 3.1.2** – Framework backend
+
+### 📦 Librerías clave
+- **Flask-Bcrypt** – Encriptación de contraseñas
+- **Flask-SQLAlchemy** – ORM para base de datos
+- **Flask-Cors** – Permitir peticiones desde frontend
+- **python-dotenv** – Manejo de variables de entorno
+- **PyJWT** – Autenticación con tokens JWT
+- **psycopg2-binary** – Conexión con PostgreSQL
+
+### 🛠️ Herramientas de desarrollo
+- **Git** – Control de versiones
+- **Postman** – Pruebas de endpoints
+- **VS Code** – Editor de código
 
 ## 📦 Instalación local
 
@@ -23,6 +32,12 @@ source venv/bin/activate  # Linux/macOS
 venv\Scripts\activate     # Windows
 
 pip install -r requirements.txt
+```
+
+## 🚀 Ejecución
+
+```bash
+python -m backtodolist.app
 ```
 
 ## 📁 Estructura de carpetas
@@ -91,9 +106,3 @@ Este proyecto implementa validaciones robustas y pruebas automatizadas para prev
 
 - Se validan campos como `email`, `password` y `username` antes de procesarlos.
 - Se utiliza SQLAlchemy para evitar interpolación directa de datos en consultas.
-
-## 🚀 Ejecución
-
-```bash
-python -m backtodolist.app
-```
