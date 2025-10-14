@@ -1,6 +1,6 @@
 from flask_cors import CORS
-from backtodolist.database import init_app, db
-from backtodolist.routes import register_blueprints
+from database import init_app, db
+from routes import register_blueprints
 
 def create_app():
     app = init_app()

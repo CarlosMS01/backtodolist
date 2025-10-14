@@ -1,7 +1,7 @@
 import os, jwt, re
 from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
-from backtodolist.models import User
+from models import User
 
 bcrypt = Bcrypt()
 
