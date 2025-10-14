@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, make_response
 from flask_bcrypt import Bcrypt
 from database import db
 from models import User
-from utils.auth_utils import generate_token, validate_credentials
+from utils.auth_utils import generate_token, validate_credentials, get_current_user
 from utils.validators import is_valid_email, is_valid_password, is_valid_username
 
 auth_bp = Blueprint('auth', __name__)
@@ -69,5 +69,14 @@ def register():
     db.session.commit()
 
     return jsonify({'message': 'Usuario registrado correctamente'})
+
+# ---------------------------------------------------------------------------------------------
+
+@auth_bp.route("/me", methods=["GET"])
+def me():
+    user = get_current_user()
+    if not user:
+        return jsonify({"message": "No autenticado"}), 401
+    return jsonify({"username": user.username})
 
 # ---------------------------------------------------------------------------------------------

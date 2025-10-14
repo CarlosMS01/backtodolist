@@ -1,5 +1,6 @@
 import os, jwt, re
 from flask_bcrypt import Bcrypt
+from flask import request, current_app
 from datetime import datetime, timedelta
 from models import User
 
@@ -26,3 +27,20 @@ def validate_credentials(email: str, password: str) -> User | None:
     if user and bcrypt.check_password_hash(user.password_hash, password):
         return user
     return None
+
+# ---------------------------------------------------------------------------------------------
+
+def get_current_user():
+    token = request.cookies.get('access_token')
+    if not token:
+        return None
+
+    try:
+        payload = jwt.decode(token, os.getenv('JWT_SECRET'), algorithms=['HS256'])
+        user_id = payload.get('user_id')
+        if not user_id:
+            return None
+        return User.query.get(user_id)
+    except (jwt.ExpiredSignatureError, jwt.InvalidTokenError) as e:
+        current_app.logger.warning(f"Token inválido: {str(e)}")
+        return None
