@@ -1,22 +1,13 @@
-# backend/database.py
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask
+from supabase import create_client
 from dotenv import load_dotenv
 import os
 
-db = SQLAlchemy()
+load_dotenv() # Carga variables de entorno
 
-def init_app():
-    load_dotenv()
-    app = Flask(__name__)
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 
-    database_url = os.getenv('DATABASE_URL')
-    if not database_url or not database_url.startswith("postgresql"):
-        raise RuntimeError("DATABASE_URL no está definido en el entorno. Verifica tu archivo .env.")
+if not SUPABASE_URL or not SUPABASE_KEY:
+    raise RuntimeError("SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY no están definidos en el entorno. Verifica tu archivo .env.")
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-    db.init_app(app)
-
-    return app
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)  # Crear cliente Supabase
