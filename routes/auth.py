@@ -1,8 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
 from flask_bcrypt import Bcrypt
-from database import db
-from models import User
-from utils.auth_utils import generate_token, validate_credentials, get_current_user
+from database import supabase
+from utils.auth_utils import generate_token, decode_token
 from utils.validators import is_valid_email, is_valid_password, is_valid_username
 
 auth_bp = Blueprint('auth', __name__)
@@ -16,11 +15,13 @@ def login():
     email = data.get('email', '').strip()
     password = data.get('password', '').strip()
 
-    user = validate_credentials(email, password)
-    if not user:
+    result = supabase.table("users").select("*").eq("email", email).execute()
+    user = result.data[0] if result.data else None
+
+    if not user or not bcrypt.check_password_hash(user["password"], password):
         return jsonify({'error': 'Credenciales inválidas'}), 401
 
-    token = generate_token(user.id)
+    token = generate_token(user["id"])
 
     response = make_response(jsonify({'message': 'Login exitoso'}))
     response.set_cookie(
@@ -60,13 +61,16 @@ def register():
     if not (is_valid_username(username) and is_valid_email(email) and is_valid_password(password)):
         return jsonify({'error': 'Datos inválidos. Verifica nombre, email y contraseña'}), 400
 
-    if User.query.filter_by(email=email).first():
+    existing = supabase.table("users").select("id").eq("email", email).execute()
+    if existing.data:
         return jsonify({'error': 'Email ya registrado'}), 400
 
     hashed_pw = bcrypt.generate_password_hash(password).decode('utf-8')
-    new_user = User(username=username, email=email, password_hash=hashed_pw)
-    db.session.add(new_user)
-    db.session.commit()
+    supabase.table("users").insert({
+        "username": username,
+        "email": email,
+        "password": hashed_pw
+    }).execute()
 
     return jsonify({'message': 'Usuario registrado correctamente'})
 
@@ -74,9 +78,20 @@ def register():
 
 @auth_bp.route("/me", methods=["GET"])
 def me():
-    user = get_current_user()
-    if not user:
+    token = request.cookies.get("access_token")
+    if not token:
         return jsonify({"message": "No autenticado"}), 401
-    return jsonify({"username": user.username})
+
+    user_id = decode_token(token)
+    if not user_id:
+        return jsonify({"message": "Token inválido"}), 401
+
+    result = supabase.table("users").select("username").eq("id", user_id).execute()
+    user = result.data[0] if result.data else None
+
+    if not user:
+        return jsonify({"message": "Usuario no encontrado"}), 404
+
+    return jsonify({"username": user["username"]})
 
 # ---------------------------------------------------------------------------------------------

@@ -1,9 +1,9 @@
+from flask import Flask
 from flask_cors import CORS
-from database import init_app, db
 from routes import register_blueprints
 
 def create_app():
-    app = init_app()
+    app = Flask(__name__)
     CORS(app, supports_credentials=True)
     register_blueprints(app)
     return app
