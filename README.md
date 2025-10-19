@@ -45,9 +45,12 @@ python backtodolist/app.py
 
 ```bash
 backtodolist/
+├── middleware/
+│   ├── jwt_required.py
 ├── routes/
 │   ├── __init__.py
 │   └── auth.py
+│   └── tasks.py
 ├── utils/
 │   ├── __init__.py
 │   ├── auth_utils.py
@@ -75,9 +78,11 @@ Centraliza el registro de rutas en la aplicación Flask:
 
 ```python
 from .auth import auth_bp
+from .tasks import tasks_bp
 
 def register_blueprints(app):
     app.register_blueprint(auth_bp, url_prefix="/auth")
+    app.register_blueprint(tasks_bp, url_prefix='/api')
 ```
 
 ### 🔐 `routes/auth.py`
@@ -89,6 +94,12 @@ Define las rutas `/login` y `/logout` usando `Blueprint`. Implementa autenticaci
 - `me()`: obtiene el usuario correspondiente.
 - Usa `bcrypt` para verificar contraseñas encriptadas.
 - Integra validadores y utilidades desde `utils`.
+
+### 🔐 `routes/tasks.py`
+Define las rutas `/tasks` para crear y recuperar las tareas hechas por el usuario:
+
+### 🧠 `utils/tasks_validators.py`
+Funcion para validar datos de entrada para el `title`, `description`, `status` y `priority`.
 
 ### 🧠 `utils/validators.py`
 Funciones para validar datos de entrada:
