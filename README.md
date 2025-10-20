@@ -96,7 +96,7 @@ Define las rutas `/login` y `/logout` usando `Blueprint`. Implementa autenticaci
 - Integra validadores y utilidades desde `utils`.
 
 ### 🔐 `routes/tasks.py`
-Define las rutas `/tasks` para crear y recuperar las tareas hechas por el usuario:
+Define las rutas `/tasks` para crear recuperar, actualizar y eliminar las tareas hechas por el usuario.
 
 ### 🧠 `utils/tasks_validators.py`
 Funcion para validar datos de entrada para el `title`, `description`, `status` y `priority`.
